@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TodoList</title>
+    <!-- css -->
+    <link rel="stylesheet" href="./assets/css/style.css">
+     <!--bootstrap 5.2-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.2.0/css/bootstrap.min.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 ">
+            <p class="h1">Todo List</p class="h1">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <form action="index.php" method="post">
+                <div class="form-group">
+                    <label for="todo">Agrega tus actividades</label>
+                    <input type="text" class="form-control" id="todo" name="todo" placeholder="Escribe aquí">
+                </div>
+                <button type="submit" class="btn btn-primary" id="btn">Submit</button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="list-group" id="lista">
+               
+            </ul>
+        </div>
+    </div>
+</div>
+<script src="./assets/js/index.js"></script>    
+</body>
+</html>
