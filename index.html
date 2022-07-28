@@ -38,7 +38,7 @@
                         <br>
                         <input type="text" class="form-control" id="todo1" 
                             placeholder="Agrega tus actividades">
-                        <button class="btn btn-success" id="btn"> Enviar</button>
+                        <button class="btn btn-success" id="btn" onclick="addTodo()"> Enviar</button>
                     </div>
                 
             </div>
@@ -64,7 +64,17 @@
                                 </tr>
                             </thead>
                             <tbody id="items">
-
+                                <tr>
+                                    <td>16</td>
+                                    <td>Hacer mercado</td>
+                                    <!-- onclick checked changes the value of class from class="true" to class="false" inside itself -->
+                                    <td><input type="checkbox" class="true" onclick="checked(this)"></td>
+                                    <td>
+                                    <a href="#" id="borrar" onclick="borr(16)">
+                                    <img src="assets/img/xmark-outline.svg" class="icono my-auto">
+                                    </a>
+                                    </td>
+                                    </tr>
                             </tbody>
                         </table>
                     </div>
@@ -79,7 +89,8 @@
             </div>
         </div>
     </div>
-    <script src="./assets/js/index2.js"></script>
+    <script src="./assets/js/index3.js"></script>
 </body>
 
 </html>
+

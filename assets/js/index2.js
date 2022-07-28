@@ -87,8 +87,8 @@ let newObject = {};
 function captura() {
     if (document.getElementById('todo1').innerText == '') {
          console.log('No se puede agregar una tarea vacia');
-        return false;
-    } else {
+        return false;} 
+    else {
         
     let input = document.getElementById('todo1').value;
     let ident = maxValueOfY++;
@@ -103,11 +103,12 @@ function captura() {
         <img src="assets/img/xmark-outline.svg" class="icono my-auto">
         </a>
     `,
-  }; }
+  };
+    return newObject; }
 }
 
 // push newobject to the array toDoList
-function add() {
+function add(  ) {
     if (captura() == false) { 
         console.log(input.value);
         console.log('No se puede agregar una tarea vacia');
@@ -121,6 +122,8 @@ function add() {
 function listar() {
   try {
     captura();
+    
+    add();
   } catch (err) {
     console.log(err);
   } finally {
@@ -135,11 +138,13 @@ function clearInput() {
 
 
 function renderList() {
+    listar();
     renderLista();
     rendertotal();
     clearInput();
   }
 
+renderList();
 
 
 //add event listener to the button
