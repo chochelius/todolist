@@ -1,152 +1,165 @@
 // capture all ids from C:\Users\Jorge\Desktop\desafioToDo\index.html
-let input = document.getElementById('todo1').value;
+let input = document.getElementById("textos").value;
 let btn = document.getElementById('btn');
 let lista = document.getElementById('items');
 let borrar = document.getElementById('borrar');
-let hecho = document.querySelectorAll("input[type=checkbox][name=hecho]");
+let hecho = document.querySelector('.true');
 let total = document.getElementById('total');
 let realizadas = document.getElementById('realizadas');
 let pendientes = document.getElementById('pendientes');
 
+let maxIdent = "";
 
+//create toDoList
 
-//create todoList
-
-let todoList = [
+let toDoList = [
 
     {
         ident: 16,
         texto: "Hacer mercado",
-        hecho: ` <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>`,
-        borrar: `
-        <a href="#" id="borrar" onclick="borr(16)">
-        <img src="assets/img/xmark-outline.svg" class="icono my-auto">
-        </a>
-        `,
+        hecho: false,
+        borrar: 16,
     },
     {
         ident: 60,
         texto: "Estudiar para la prueba",
-        hecho: ` <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>`,
-        borrar: `
-        <a href="#" id="borrar" onclick="borr(60)">
-        <img src="assets/img/xmark-outline.svg" class="icono my-auto">
-        </a>
-        `,
+        hecho: false,
+        borrar: 60
     },
     {
         ident: 24,
         texto: "Sacar a pasear a Toddy",
-        hecho: ` <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>`, 
-        borrar: `
-        <a href="#" id="borrar" onclick="borr(16)">
-        <img src="assets/img/xmark-outline.svg" class="icono my-auto">
-        </a>
-        `,
-    },
+        hecho: false,
+        borrar: 16
+    }
 ];
 
+function seHizo(val) {
+    if ( val == true) {val =  'checked';}
+    else if (val = false) { val = 'unchecked';}
+};
 
-function isTodo(todo) {
-    //check if todo is boolean
-    if (typeof todo.hecho == "boolean") {
-        return true;
-    }
 
+
+
+
+
+
+
+function renderListas() {
+    toDoList.forEach(item => {
+
+        item = 
+           `
+    <tr>
+    <td>${item.ident}</td>
+    <td>"${item.texto}"</td>
+    <td> <input type='checkbox' class='true' ${seHizo(item.hecho)}> </td>
+    <td> <a href="#" id="borrar" onclick="borr(${item.ident})">
+    <img src="assets/img/xmark-outline.svg" class="icono my-auto">
+    </a>
+    </td>
+    </tr>
+    `;
+        lista.innerHTML += item;
+
+    });
 }
 
+let realizado = document.querySelector('.true');
+realizado.addEventListener('change', function () {
+    console.log('cambio');
+    if (realizado.checked) {
+        changeHecho(realizado.value, true);
+    } else {
+        changeHecho(realizado.value, false);
+    };
+    renderTotals();
+    renderListas();
+} );
+
+
+function renderTotals() {
+    total.innerHTML = "";
+    realizadas.innerHTML = "";
+    pendientes.innerHTML = "";
+
+    //render totals to the dom
+    length1 = toDoList.length;
+    realizadas1 = toDoList.filter(todo => todo.hecho === true);
+    pendientes1 = toDoList.filter(todo => todo.hecho === false);
+    total.innerHTML = length1;
+    realizadas.innerHTML = realizadas1;
+    pendientes.innerHTML = pendientes1.length;
+
+    // find the maximum value of ident in the array of objects
+    maxIdent = toDoList.reduce((max, todo) => Math.max(max, todo.ident), 0);
+    console.log(maxIdent);
+}
+
+console.log(`Conectado, el valor maximo del array toDoList es ${maxIdent} la cantidad de elementos en el array es ${toDoList.length}`);
 
 
 
 // initial render of list and totals to the dom
- function render() {
+let render = function render() {
     //clear lista
     lista.innerHTML = "";
-    //render todoList
-    todoList.forEach(todo => {
-        lista.innerHTML += `
-        <tr>
-        <td>${todo.ident}</td>
-        <td>${todo.texto}</td>
-        <td>${todo.hecho}</td>
-        <td>${todo.borrar}</td>
-        </tr>
-        `;
-        //clear lista
-        
+    //render toDoList
+    renderListas();
+    //render totals
+    renderTotals();
 
-        //render totals to the dom
-        total.innerHTML = todoList.length;
-        realizadas.innerHTML = todoList.filter(todo => todo.hecho == true).length;
-        pendientes.innerHTML = todoList.filter(todo => todo.hecho == false).length;
+}
 
-        
-    }
-    );
+//clear input
+let clearInput = function clearInput() {
+    document.getElementById('todo1').value = "";
 }
 
 render();
 
-//clear input
-function clearInput() {
-    document.getElementById('todo1').value = "";
-} 
-
-clearInput();
-//get highest value of ident and save it as a variable
-
-let maxIdent = todoList.reduce((max, todo) => { return todo.ident > max ? todo.ident : max; }, 0);
-
-// get input value and add to todoList as an array of objects
-function addTodo() {
-    //clear lista
-    lista.innerHTML = "";
+// get input value and add to toDoList as an array of objects
+let addTodo = function addTodo() {
     //get input value
-    let input = document.getElementById('todo1').value;
-    todoList.push({
-        ident: maxIdent + 1 ,
-        texto: input,
-        hecho: `<td><input type="checkbox" class="false" onclick="checked(this)"></td>`,
-        borrar: `
-        <a href="#" id="borrar${maxIdent + 1})" onclick="borr(${maxIdent + 1}))">
-        <img src="assets/img/xmark-outline.svg" class="icono my-auto">
-        </a>
-        `,
+    console.log(input.textContent);
+    input = document.getElementById("todo1").value;
+    toDoList.push({
+        ident: (nextIdent = maxIdent + 1),
+        texto: `${input}`,
+        hecho: false,
+        borrar: nextIdent,
     });
-    render();
+    lista.innerHTML = "";
+    renderListas();
+    renderTotals();
 
-    maxIdent++; //increment maxIdent
+
+
+
+
     //clear input
-    document.getElementById('todo1').value = "";
+    clearInput();
 
-}
+};
 
-
-ifChecked = () => {
-    isTodo();
-    if (hecho.checked) {
-        console.log("hecho");
-        todoList.forEach(todo => {
-            if (hecho.id == todo.ident) {
-                todo.hecho = true;
-                render();
-            }
+let changeHecho = function (hecho) {
+    toDoList.forEach(hecho => {
+        if (hecho) {
+            realizadas.innerHTML = (realizadas1+1);
+            renderTotals();
+        } else if (hecho){ 
+            pendientes.innerHTML = (total1-1);
+            renderTotals();
         }
-        );
-    } else {
-        todoList.forEach(todo => {
-            if (todo.ident == hecho.id) {
-                todo.hecho = false;
-                render();
-            }
-        }
-        );
-    }
+    } );
 }
+     
 
-isValue = () => {
-    console.log(todoList[0].hecho)
-}  
 
-document.getElementById('').addEventListener('change', isValue());
+function borr(id) {
+    // filter out object with the parameter ident from the toDoList array
+    toDoList = toDoList.filter(todo => todo.ident !== id);
+    render();
+}         
 
